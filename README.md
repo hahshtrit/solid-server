@@ -10,33 +10,6 @@
 #### Note:
    `git push upstream` pushes to the branch matching the one on `hahshtrit/solid-server`
 
-# Foobar
-
-Foobar is a Python library for dealing with word pluralization.
-
-## Installation
-
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
-
-```bash
-pip install foobar
-```
-
-## Usage
-
-```python
-import foobar
-
-# returns 'words'
-foobar.pluralize('word')
-
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
-```
-
 ## Contributing
 Only Steps 3 and 4 are needed to create a pull request, but it seems steps 1 and 2 are recommended for organizational purposes
 1. Create a branch in your forked repository, with the name of whatever feature u are added 
