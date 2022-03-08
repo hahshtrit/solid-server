@@ -1,3 +1,7 @@
+# Current Goals
+
+Ask about live interactions
+
 # Foobar
 
 Foobar is a Python library for dealing with word pluralization.
