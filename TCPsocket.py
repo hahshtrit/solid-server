@@ -10,6 +10,8 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         client_id = self.client_address[0] + " :is sending data."  # +  self.client_address[1]
         newData = received_data
         # decoded = received_data.decode()
+
+        print("hi")
         sys.stdout.flush()
         sys.stderr.flush()
 
