@@ -1,6 +1,6 @@
 ###  Current Goals
-Need to review project requirements and decide on what to do.
-Do upvotes for live interactions
+- Need to review project requirements and decide on what to do.
+- Do upvotes for live interactions
 
 # Foobar
 
