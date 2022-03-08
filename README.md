@@ -34,8 +34,7 @@ foobar.singularize('phenomena')
 ```
 
 ## Contributing
-Pull requests are welcome.
-
+Only Steps 3 and 4 are needed to create a pull request, but it seems steps 1 and 2 are recommended for organizational purposes
 1. Create a branch in your forked repository, with the name of whatever feature u are added
    1. `git checkout -b <new-feature>`
 2. Once you have commited all wanted changes to your <new-feature> branch, run the command:
