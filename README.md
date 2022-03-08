@@ -2,6 +2,10 @@
 - Need to review project requirements and decide on what to do.
 - Do upvotes for live interactions
 
+### To update your forked repo with main run:
+1. `git pull upstream master`
+2. `git push origin master`
+
 # Foobar
 
 Foobar is a Python library for dealing with word pluralization.
