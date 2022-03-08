@@ -11,7 +11,6 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         newData = received_data
         # decoded = received_data.decode()
 
-        print("hi")
         sys.stdout.flush()
         sys.stderr.flush()
 
