@@ -40,8 +40,8 @@ Pull requests are welcome.
    1. `git checkout -b <new-feature>`
 2. Once you have commited all wanted changes to your <new-feature> branch, run the command:
    `git push origin <new-feature>`
-   1. This will create a pull request on the main branch
-3. Once the pull request is on the pull requests tab in the main hahshtrit, someone has to merge the pull request
+3. Go to the branch on github and click `contribute`
+4. Confirm to send a pull request
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
