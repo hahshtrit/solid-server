@@ -3,8 +3,9 @@
 - Do upvotes for live interactions
 
 ### To update your forked repo with main run:
-1. `git pull upstream master`
-2. `git push origin master`
+1. `git remote add upstream <url>`
+2. `git pull upstream master`
+3. `git push origin master`
 
 # Foobar
 
