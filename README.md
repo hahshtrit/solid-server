@@ -30,9 +30,14 @@ foobar.singularize('phenomena')
 ```
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Pull requests are welcome.
 
-Please make sure to update tests as appropriate.
+1. Create a branch in your forked repository, with the name of whatever feature u are added
+   1. `git checkout -b <new-feature>`
+2. Once you have commited all wanted changes to your <new-feature> branch, run the command:
+   `git push origin <new-feature>`
+   1. This will create a pull request on the main branch
+3. Once the pull request is on the pull requests tab in the main hahshtrit, someone has to merge the pull request
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
