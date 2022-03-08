@@ -7,6 +7,9 @@
 2. `git pull upstream master`
 3. `git push origin master`
 
+#### Note:
+   `git push upstream` pushes to the branch matching the one on `hahshtrit/solid-server`
+
 # Foobar
 
 Foobar is a Python library for dealing with word pluralization.
