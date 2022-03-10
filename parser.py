@@ -1,7 +1,7 @@
 import TCPsocket
 import json
 
-
+#need to add more parse for webbody and things
 def split_request(request):
     first_new_line = request.find(parse.new_line)
     blank_line = request.find(parse.blank_line)
@@ -33,3 +33,4 @@ class parse:
         [request_line, headersBytes, self.body] = split_request(request)
         [self.method, self.path, self.http_version] = parse_request_line(request_line)
         self.headers = parse_headers(headersBytes)
+
