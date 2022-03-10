@@ -17,7 +17,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         lengthCalled = 0  # the parsed body content replaces this
         # lengthCalled = parse(newData).length # this will return the body of the content if it exist
 
-        ## calculates the total bytes that you need to read from the body if it containts:
+        # calculates the total bytes that you need to read from the body if it containts:
         while lengthCalled > 0:
             data = self.request.recv(1024)
             newData = newData + data
