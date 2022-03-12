@@ -27,6 +27,7 @@ Once you are done working on the branch locally, you can push it Github for coll
    git push --set-upstream origin <branch-name>
    ```
 The branch should now be visible to everyone else on Github
+
 3. The branch will now have a *pull and merge request* attached to it
 4. Work on the branch with other people, etc.
 5. When it is ready, someone can merge it with `master`
