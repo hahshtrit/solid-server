@@ -4,7 +4,7 @@
 
 ## Collaboration
 #### IMPORTANT: Make sure to `git pull` before working on anything 
-#### Creating Branch 
+### Creating Branch 
 Instead of using forked repos, we can use branches to keep everyone's work flow separate.
 1. Clone the main repo
 2. Create a branch for a new feature using 
@@ -16,7 +16,7 @@ Instead of using forked repos, we can use branches to keep everyone's work flow 
 3. Work on the code
 
 Note: At this point, the branch only exists locally on your computer
-#### Pushing changes
+### Pushing changes
 Once you are done working on the branch locally, you can push it Github for collaboration etc.
 1. To commit changes, run
    ```
