@@ -26,11 +26,13 @@ Once you are done working on the branch locally, you can push it Github for coll
    ```
    git push --set-upstream origin <branch-name>
    ```
-The branch should now be visible to everyone else on Github
+   The branch should now be visible to everyone else on Github
 
-3. The branch will now have a *pull and merge request* attached to it
-4. Work on the branch with other people, etc.
-5. When it is ready, someone can merge it with `master`
+3. The branch will now have a *pull and merge request* attached to it 
+
+   Work on the branch with other people, etc.
+
+4. When it is ready, someone can merge it with `master`
       1. I think we should have at least 2 people approve the new branches before merging it with master
 
 There will probably be a couple of merge conflicts since we are all going to be working on the same things at times. 
