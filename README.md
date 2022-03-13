@@ -11,7 +11,7 @@ Instead of using forked repos, we can use branches to keep everyone's work flow 
    ```
    git checkout -b <branch-name>
    ```
-   or `git checkout <branch-name` into an existing branch
+   or `git checkout <branch-name>` into an existing branch
 
 3. Work on the code
 
