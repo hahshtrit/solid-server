@@ -2,26 +2,40 @@
 - Need to review project requirements and decide on what to do.
 - Do upvotes for live interactions
 
-### To update your forked repo with main run:
-1. `git remote add upstream <url>`
-2. `git pull upstream master`
-3. `git push origin master`
+## Collaboration
+#### IMPORTANT: Make sure to `git pull` before working on anything 
+### Creating Branch 
+Instead of using forked repos, we can use branches to keep everyone's work flow separate.
+1. Clone the main repo
+2. Create a branch for a new feature using 
+   ```
+   git checkout -b <branch-name>
+   ```
+   or `git checkout <branch-name` into an existing branch
 
-#### Note:
-   `git push upstream` pushes to the branch matching the one on `hahshtrit/solid-server`
+3. Work on the code
 
-## Contributing
-Only Steps 3 and 4 are needed to create a pull request, but it seems steps 1 and 2 are recommended for organizational purposes
-1. Create a branch in your forked repository, with the name of whatever feature u are added 
+Note: At this point, the branch only exists locally on your computer
+### Pushing changes
+Once you are done working on the branch locally, you can push it Github for collaboration etc.
+1. To commit changes, run
    ```
-   git checkout -b <new-feature>
+   git commit -a
    ```
-2. Once you have commited all wanted changes to your <new-feature> branch, run the command:
+2. To push the branch onto Github use this command:
    ```
-   git push origin <new-feature>
+   git push --set-upstream origin <branch-name>
    ```
-3. Go to the branch on github and click `contribute`
-4. Confirm to send a pull request
+   The branch should now be visible to everyone else on Github
+
+3. The branch will now have a *pull and merge request* attached to it 
+
+   Work on the branch with other people, etc.
+
+4. When it is ready, someone can merge it with `master`
+      1. I think we should have at least 2 people approve the new branches before merging it with master
+
+There will probably be a couple of merge conflicts since we are all going to be working on the same things at times. 
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
