@@ -1,15 +1,37 @@
-from flask import render_template
+from flask import render_template, request, redirect
 from flasking import app
+import database as db
 
 @app.route("/")
 @app.route("/home")
 def homepage():
-    return render_template('homepage.html', title="Home Page")
+    return render_template('homepage.html')
 
-@app.route("/about")
+@app.route("/about")    # not gonna be used
 def about():
-    return render_template('about.html', title="about")
+    return render_template('about.html')
 
 @app.route("/account")
 def account():
-    return render_template('account.html', title="account")
+    return render_template('account.html')
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get("username")
+        password = request.form.get("password")
+        print("login")
+        print(f"username: {username}, password {password}")
+        return redirect("/")
+    return render_template('login.html')
+
+@app.route("/sign-up", methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        username = request.form.get("username")
+        password = request.form.get("password")
+        print("signup")
+        print(f"username: {username}, password: {password}")
+        
+        return redirect("/")
+    return render_template('signup.html')
