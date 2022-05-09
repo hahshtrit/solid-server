@@ -2,12 +2,20 @@
 {% block title %}Home{% endblock %}
 
 {%block content%}
-<h1>Home Page</h1>
+<h1 align="center">Home Page</h1>
 <!-- <div class="test">
     <p>this is really neat</p>
 </div> -->
 <!-- <script src="{{url_for('static', filename='main.js')}}"></script> -->
-    {% if name %}
-    <h3>Welcome {{ name }}</h3>
-    {% endif %}
+{% if name %}
+<h3>Welcome {{ name }}</h3>
+{% endif %}
+<h3 align="center">Online Users:</h3>
+<ul class="list-group list-group-flush" id="online_users">
+    {% for user in online_users %}
+    <li class="list-group-item">
+        {{ user }}
+    </li>
+    {% endfor %}
+</ul>
 {%endblock content%}
