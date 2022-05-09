@@ -19,3 +19,10 @@ def hash_token(auth_token: str) -> bytes:
     # feel free to salt this if y'all like that kind of stuff ;0
     auth_token_hash: hash = sha1(auth_token.encode())
     return auth_token_hash.digest()
+
+
+def sanatize(content: bytes):       # prevents HTML,JS INJECTION
+    comment = comment.replace(b"&", b"&amp;")
+    comment = comment.replace(b"<", b"&lt;")
+    comment = comment.replace(b">", b"&gt;")
+    return content

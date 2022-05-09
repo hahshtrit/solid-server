@@ -1,16 +1,8 @@
-import flask
-from flask import Flask, render_template, request, redirect
+from flask import render_template, request, redirect, make_response
 from flask import session
+from run import app
 
 from utils.database import register_user
-
-app = Flask(__name__)
-
-if __name__ == "__main__":
-    # enabling threading fixes 403 error on chrome, i think
-    # nvm, it doesn't work, idk
-    app.run(host="0.0.0.0", port=80, debug=True, threaded=True)
-
 
 # @app.route('/getcookie')
 # def getcookie():
@@ -22,17 +14,17 @@ if __name__ == "__main__":
 @app.route("/home")
 def homepage():
     # setting up a cookie
-    resp = flask.make_response(render_template('homepage.html'))
+    resp = make_response(render_template('homepage.html'))
     resp.set_cookie('visits', value="1")
     return resp
 
+    # return render_template('homepage.html', online_users=online_users)
 
 @app.route("/about")  # not gonna be used
 def about():
     return render_template('about.html')
 
-
-@app.route("/account")
+@app.route("/account")  # has settings and dms
 def account():
     return render_template('account.html')
 
@@ -45,6 +37,9 @@ def login():
         # TODO authenticate user
         print("login")
         print(f"username: {username}, password {password}")
+        # check if successful login
+        # if so, add cookie auth_token, add user to online_users
+        # else render_template('login.html') ?
         return redirect("/")
     return render_template('login.html')
 
