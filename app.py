@@ -40,6 +40,6 @@ def signup():
         password = request.form.get("password")
         print("signup")
         print(f"username: {username}, password: {password}")
-
         return redirect("/")
+
     return render_template('signup.html')
