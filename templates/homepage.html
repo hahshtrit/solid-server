@@ -7,4 +7,7 @@
     <p>this is really neat</p>
 </div> -->
 <!-- <script src="{{url_for('static', filename='main.js')}}"></script> -->
+    {% if name %}
+    <h3>Welcome {{ name }}</h3>
+    {% endif %}
 {%endblock content%}
