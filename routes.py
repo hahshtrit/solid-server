@@ -1,26 +1,6 @@
-import flask
 from flask import render_template, request, redirect, make_response
 from flask import session
 from __init__ import app
-
-### START
-from utils.database import register_user
-
-from flask import Flask
-
-app = Flask(__name__)
-
-if __name__ == "__main__":
-    # enabling threading fixes 403 error on chrome, i think
-    # nvm, it doesn't work, idk
-    app.run(host="0.0.0.0", debug=True, threaded=True)
-### END
-
-# @app.route('/getcookie')
-# def getcookie():
-#     visits = request.cookies.get('visits')
-#     print(visits)
-
 
 @app.route("/")
 @app.route("/home")
