@@ -8,10 +8,12 @@ COPY . .
 # Download dependencies
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-EXPOSE 5000
+
+EXPOSE 80
 
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait /wait
 
 RUN chmod +x /wait
 
-CMD /wait && python routes.py
+
+CMD /wait && python run.py
