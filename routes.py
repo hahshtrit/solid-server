@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, make_response
 from flask import session
-from run import app
+from __init__ import app
 
 from utils.database import register_user
 
