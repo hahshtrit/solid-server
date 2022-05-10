@@ -1,16 +1,16 @@
 import sys
 
-import bcrypt
 from flask import render_template, request, redirect, make_response
-from flask import session
+from flask import session, flash
 from __init__ import app, socket
 from flask_socketio import SocketIO, emit
-
-votes = 0 # this is needed for working upvote/downvote
 
 from utils.authentication import generate_auth_token
 from utils.database import register, authenticate, add_auth_token
 from utils.cookie_parsing import parse_visits, auth_user
+from bcrypt import checkpw
+
+votes = 0  # this is needed for working upvote/downvote
 
 
 @app.route("/")
@@ -44,7 +44,8 @@ def login():
         username, password = request.form.get("username").strip(), request.form.get("password").strip()
         print(f"username: {username}, password: {password}")
         user = authenticate(username)
-        if user and bcrypt.checkpw(password.encode(), user["password"]):
+        if user and checkpw(password.encode(), user["password"]):
+            flash(u'Authentication Successful', 'success')
             # TODO add user to online_users
             # session[user] = True
             response = redirect("/")
@@ -55,7 +56,7 @@ def login():
             response.set_cookie('auth_token', value=auth_token)
             return response
         else:
-            print("Incorrect username/password")
+            flash(u'Incorrect username/password', 'danger')
             return render_template('login.html')
 
     return render_template('login.html')
@@ -67,9 +68,11 @@ def signup():
         username, password = request.form.get("username").strip(), request.form.get("password").strip()
         print(f"username: {username}, password: {password}")
         register(username, password)
+        flash(u'Account created successfully', 'success')
         # -> /login (or bypass login) -> homepage
         return redirect("/")
     return render_template('signup.html')
+
 
 # this is working socket stuff for upvote/downvote
 # @socket.on('upvote')
@@ -100,10 +103,12 @@ def signup():
 def draw():
     return render_template('draw.html')
 
+
 @socket.on('draw')
 def draw(data):
     print(data)
     emit('drawing', data, broadcast=True)
+
 
 @socket.on('stop_drawing')
 def stop_draw(data):
