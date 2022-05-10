@@ -10,5 +10,5 @@ if __name__ == "__main__":
 
 import routes
 
-# to run with docker, ensure that the url in browser is 127.0.0.1:8080
+# to run with docker, ensure that the url in browser is 127.0.0.1:8080, localhost:8080
 # at least that worked for abi

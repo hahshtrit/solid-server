@@ -1,3 +1,5 @@
+import sys
+
 from pymongo import MongoClient
 from utils.authentication import hash_password, hash_token
 import bcrypt
@@ -8,9 +10,7 @@ db = mongo_client["cse312"]
 userinfo = db["userinfo"]
 
 
-# username could be in plaintext
-
-# db['userinfo'] should be
+# db['userinfo'] is
 # {
 # username: _               (in string)
 # hash_salt_password: _     (in bytes)
@@ -19,12 +19,18 @@ userinfo = db["userinfo"]
 
 # TODO: session IDs can be used instead of authentication tokens
 
-def register_user(entered_username: str, entered_password: str, auth_token: str = ""):
+def register(entered_username: str, entered_password: str, auth_token: str = ""):
     userinfo.insert_one({"username": entered_username, "password": hash_password(entered_password), "auth_token": b""})
+    print(list(userinfo.find()))
+    sys.stdout.flush()
+
+
+def add_auth_token(username: str, auth_token):
+    userinfo.update_one({"username": username}, {'$set': {"auth_token": hash_token(auth_token)}})
 
 
 # only need to query a user by username or auth_token
-def find_user(username: str = "", auth_token: str = "") -> dict:
+def authenticate(username: str = "", auth_token: str = "") -> dict:
     if not username and not auth_token:
         print("At least one argument should be given")
         # and also, this stops exploits using empty auth_tokens
