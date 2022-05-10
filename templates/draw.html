@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Draw{% endblock %}
+
+{%block content%}
+<section class="draw" style="height:100%; display:flex;">
+    <h1>Draw Here</h1>
+    <div class="drawing-board">
+        <canvas id="drawing-board" style="position:absolute; background-color: white;"></canvas>
+    </div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+<script src="{{url_for('static', filename='drawing.js')}}"></script>
+{% endblock content%}
