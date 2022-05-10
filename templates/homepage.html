@@ -18,4 +18,25 @@
     </li>
     {% endfor %}
 </ul>
+<!-- below is working upvote/downvote with count -->
+<!-- <button id="upvote" type="upvote" class="btn btn-success">Upvote</button>
+<p id="votes">{{ votes }}</p>
+<button id="downvote" type="downvote" class="btn btn-danger">Downvote</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf-8">
+    var socket = io();
+    socket.on('connect', function() {
+        socket.emit('my event', {data: 'I\'m connected!'});
+    });
+
+    document.getElementById("upvote").onclick = function(){
+        socket.emit('upvote', {'votes': 'upvote'});
+    }
+    document.getElementById("downvote").onclick = function(){
+        socket.emit('downvote', {'votes': 'downvote'});
+    }
+    socket.on('update_votes', function(data) {
+        document.getElementById("votes").innerHTML = data;
+    });
+</script> -->
 {%endblock content%}
