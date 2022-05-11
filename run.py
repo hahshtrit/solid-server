@@ -1,4 +1,3 @@
-from distutils.log import debug
 from __init__ import app, socket
 
 if __name__ == "__main__":
