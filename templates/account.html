@@ -1,1 +1,10 @@
 {% extends 'base.html' %}
+{% block title %}Account{% endblock %}
+
+{% block content %}
+<h1 align="center">Account Page</h1>
+<script src="{{url_for('static', filename='main.js')}}"></script>
+<button type="button" class="btn btn-dark" onclick="darkMode();">Dark-Mode</button>
+<button type="button" class="btn btn-secondary" onclick="lightMode();">Light-Mode</button>
+<p>test text ta;lskjfa;sldjf alsdfja;sdkfjas;d;lkj</p>
+{% endblock content %}

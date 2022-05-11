@@ -14,6 +14,8 @@ votes = 0  # this is needed for working upvote/downvote
 
 online_users = {}
 
+isDarkMode = True
+
 
 # TODO move public docs into /public
 
@@ -26,6 +28,9 @@ def homepage():
     print(f"Cookies: {request.cookies}")
     username: str = auth_user(request.cookies)
     visits: str = parse_visits(request.cookies)
+
+    # return render_template('homepage.html', darkMode = isDarkMode)
+    # return resp
 
     response = make_response(
         render_template('homepage.html', online_users=online_user_list,
@@ -42,7 +47,7 @@ def about():
 
 @app.route("/account")  # has settings and dms
 def account():
-    return render_template('account.html')
+    return render_template('account.html', darkMode = isDarkMode)
 
 
 @app.route("/login", methods=['GET', 'POST'])
