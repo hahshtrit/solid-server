@@ -1,6 +1,6 @@
 ###  Current Goals
-- Need to review project requirements and decide on what to do.
-- Do upvotes for live interactions
+- User DM capability
+- User account: settings, profile pic 
 
 ## Collaboration
 #### IMPORTANT: Make sure to `git pull` before working on anything 

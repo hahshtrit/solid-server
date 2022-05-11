@@ -29,6 +29,10 @@ def add_auth_token(username: str, auth_token):
     userinfo.update_one({"username": username}, {'$set': {"auth_token": hash_token(auth_token)}})
 
 
+def remove_auth_token(username: str):
+    userinfo.update_one({"username": username}, {'$set': {"auth_token": ""}})
+
+
 # only need to query a user by username or auth_token
 def authenticate(username: str = "", auth_token: str = "") -> dict:
     if not username and not auth_token:
