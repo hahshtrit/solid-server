@@ -48,7 +48,7 @@ def account():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username, password = request.form.get("username").strip(), request.form.get("password").strip()
+        username, password = request.form.get("username").strip(), request.form.get("password")
 
         user = authenticate(username)
         if user and checkpw(password.encode(), user["password"]):
@@ -71,7 +71,7 @@ def login():
 @app.route("/sign-up", methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        username, password = request.form.get("username").strip(), request.form.get("password").strip()
+        username, password = request.form.get("username").strip(), request.form.get("password")
         print(f"username: {username}, password: {password}")
         register(username, password)
         flash(u'Account created successfully', 'success')
