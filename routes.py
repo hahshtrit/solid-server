@@ -95,7 +95,6 @@ def logout():
         response.set_cookie('auth_token', expires=0)
         return response
 
-
 # this is working socket stuff for upvote/downvote
 # @socket.on('upvote')
 # def upvote(data):
