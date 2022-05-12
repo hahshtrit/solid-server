@@ -1,9 +1,10 @@
 import sys
 
-from flask import render_template, request, redirect, make_response
+from flask import render_template, request, redirect, make_response, send_file
 from flask import session, flash
 from __init__ import app, socket
 from flask_socketio import SocketIO, emit
+from io import BytesIO
 
 from utils.authentication import generate_auth_token
 from utils.database import register, authenticate, add_auth_token
@@ -29,12 +30,18 @@ def homepage():
     visits: str = parse_visits(request.cookies)
     # photo = 'images/dog.jpg'
     photo = photo_user(request.cookies)
+    # p = send_file(BytesIO(data), attachment_filename=photo)
+    # print(p)
+    # print(photo, 'this is the photo')
     # print(photo)
     # photo = None
+    with open(f"static/images/{username}.jpg", "wb") as f:
+        f.write(photo)
+        f.close()
 
     response = make_response(
         render_template('homepage.html', online_users=online_user_list,
-                        name=username, visits=visits, picture=photo))
+                        name=username, visits=visits, picture=f"images/{username}.jpg"))
     response.set_cookie('visits', value=visits)
     sys.stdout.flush()
     return response
@@ -77,11 +84,13 @@ def login():
 def signup():
     if request.method == 'POST':
         username, password = request.form.get("username").strip(), request.form.get("password")
+        file = request.files['photo']
 
         # print(f"username: {username}, password: {password}")
-        #TODO change the profile_pic path from dog to the user uploaded pic
-
-        register(username, password, profile_pic="images/dog.jpg")
+        # TODO change the profile_pic path from dog to the user uploaded pic
+        reading = (file.read())
+        register(username, password, profile_pic=reading)
+        # print(reading)
         flash(u'Account created successfully', 'success')
 
         # -> /login (or bypass login) -> homepage

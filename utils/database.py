@@ -19,8 +19,9 @@ userinfo = db["userinfo"]
 
 # TODO: session IDs can be used instead of authentication tokens
 
-def register(entered_username: str, entered_password: str, auth_token: str = "", profile_pic=None):
-    userinfo.insert_one({"username": entered_username, "password": hash_password(entered_password), "auth_token": b"", "profile_pic": profile_pic })
+def register(entered_username: str, entered_password: str, auth_token: str = "", profile_pic: bytes = None):
+    userinfo.insert_one({"username": entered_username, "password": hash_password(entered_password), "auth_token": b"",
+                         "profile_pic": profile_pic})
     # print(list(userinfo.find()))
     sys.stdout.flush()
 
