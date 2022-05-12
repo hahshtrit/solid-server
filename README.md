@@ -1,6 +1,6 @@
 ###  Current Goals
 - User DM capability
-- User account: settings, profile pic 
+- User account: settings 
 
 ## Collaboration
 #### IMPORTANT: Make sure to `git pull` before working on anything 
