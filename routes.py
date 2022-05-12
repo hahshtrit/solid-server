@@ -16,20 +16,25 @@ online_users = {}
 
 
 # TODO move public docs into /public
-
+@app.route("/dog.jpg")
+def dog():
+    doggie = open("images/dog.jpg", "rb")
+    return doggie
 @app.route("/")
 @app.route("/home")
 def homepage():
     global online_users
     online_user_list = [users for users, status in online_users.items() if status]
 
-    print(f"Cookies: {request.cookies}")
+    # print(f"Cookies: {request.cookies}")
     username: str = auth_user(request.cookies)
+    # add profile picture here in make response
     visits: str = parse_visits(request.cookies)
+    photo = 'templates/dog.jpg'
 
     response = make_response(
         render_template('homepage.html', online_users=online_user_list,
-                        name=username, visits=visits))
+                        name=username, visits=visits, picture=photo))
     response.set_cookie('visits', value=visits)
     sys.stdout.flush()
     return response
@@ -72,9 +77,13 @@ def login():
 def signup():
     if request.method == 'POST':
         username, password = request.form.get("username").strip(), request.form.get("password")
-        print(f"username: {username}, password: {password}")
+
+        # print(f"username: {username}, password: {password}")
+        profile_pic = request.form.get("profile_pic")
+        # print(profile_pic, 'this is the profile pic')
         register(username, password)
         flash(u'Account created successfully', 'success')
+
         # -> /login (or bypass login) -> homepage
         # return redirect("/")
         return redirect("/login")
@@ -94,6 +103,7 @@ def logout():
         response = redirect("/")
         response.set_cookie('auth_token', expires=0)
         return response
+
 
 # this is working socket stuff for upvote/downvote
 # @socket.on('upvote')
@@ -127,11 +137,11 @@ def draw():
 
 @socket.on('draw')
 def draw(data):
-    print(data)
+    # print(data)
     emit('drawing', data, broadcast=True)
 
 
 @socket.on('stop_drawing')
 def stop_draw(data):
-    print(data)
+    # print(data)
     emit('stopping_drawing', data, broadcast=True)
