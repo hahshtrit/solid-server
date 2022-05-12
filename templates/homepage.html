@@ -21,11 +21,13 @@
     <br/>
     <h3 align="left">Online Users:</h3>
     <ul class="list-group list-group-flush" id="online_users">
-        {% for user in online_users %}
+        {% for user, pics in online_users %}
             <li class="list-group-item">
                 {{ user }}
+                <img src= "{{url_for('static', filename= pics)}}"  class="profilePic"/>
             </li>
         {% endfor %}
+
     </ul>
     <!-- below is working upvote/downvote with count -->
     <!-- <button id="upvote" type="upvote" class="btn btn-success">Upvote</button>

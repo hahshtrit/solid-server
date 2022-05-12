@@ -22,7 +22,7 @@ online_users = {}
 @app.route("/home")
 def homepage():
     global online_users
-    online_user_list = [users for users, status in online_users.items() if status]
+    online_user_list = [(users, f"images/{users}.jpg") for users, status in online_users.items() if status]
 
     # print(f"Cookies: {request.cookies}")
     username: str = auth_user(request.cookies)
@@ -34,7 +34,6 @@ def homepage():
             f.write(photo)
             f.close()
         path = f"images/{username}.jpg"
-
 
     response = make_response(
         render_template('homepage.html', online_users=online_user_list,
