@@ -7,7 +7,7 @@ from flask_socketio import SocketIO, emit
 
 from utils.authentication import generate_auth_token
 from utils.database import register, authenticate, add_auth_token
-from utils.cookie_parsing import parse_visits, auth_user
+from utils.cookie_parsing import parse_visits, auth_user, photo_user
 from bcrypt import checkpw
 
 votes = 0  # this is needed for working upvote/downvote
@@ -16,11 +16,6 @@ online_users = {}
 
 
 # TODO move public docs into /public
-@app.route("/dog.jpg")
-def dog():
-    doggie = open("images/dog.jpg", "rb")
-    return doggie
-
 
 @app.route("/")
 @app.route("/home")
@@ -32,7 +27,10 @@ def homepage():
     username: str = auth_user(request.cookies)
     # add profile picture here in make response
     visits: str = parse_visits(request.cookies)
-    photo = 'templates/dog.jpg'
+    # photo = 'images/dog.jpg'
+    photo = photo_user(request.cookies)
+    # print(photo)
+    # photo = None
 
     response = make_response(
         render_template('homepage.html', online_users=online_user_list,
@@ -81,9 +79,9 @@ def signup():
         username, password = request.form.get("username").strip(), request.form.get("password")
 
         # print(f"username: {username}, password: {password}")
-        profile_pic = request.form.get("profile_pic")
-        # print(profile_pic, 'this is the profile pic')
-        register(username, password)
+        #TODO change the profile_pic path from dog to the user uploaded pic
+
+        register(username, password, profile_pic="images/dog.jpg")
         flash(u'Account created successfully', 'success')
 
         # -> /login (or bypass login) -> homepage
