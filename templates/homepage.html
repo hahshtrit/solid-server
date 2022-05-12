@@ -10,6 +10,10 @@
     <!-- <script src="{{url_for('static', filename='main.js')}}"></script> -->
     {% if name %}
         <h3>Welcome, {{ name }}</h3>
+
+        {% if picture %}
+            <img src= "{{url_for('static', filename= picture)}}"  class="profilePic"/>
+        {% endif %}
     {% endif %}
 
     <br/>

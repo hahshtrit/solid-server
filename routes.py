@@ -1,13 +1,14 @@
 import sys
 
-from flask import render_template, request, redirect, make_response
+from flask import render_template, request, redirect, make_response, send_file
 from flask import session, flash
 from __init__ import app, socket
 from flask_socketio import SocketIO, emit
+from io import BytesIO
 
 from utils.authentication import generate_auth_token
 from utils.database import register, authenticate, add_auth_token
-from utils.cookie_parsing import parse_visits, auth_user
+from utils.cookie_parsing import parse_visits, auth_user, photo_user
 from bcrypt import checkpw
 
 votes = 0  # this is needed for working upvote/downvote
@@ -23,13 +24,18 @@ def homepage():
     global online_users
     online_user_list = [users for users, status in online_users.items() if status]
 
-    print(f"Cookies: {request.cookies}")
+    # print(f"Cookies: {request.cookies}")
     username: str = auth_user(request.cookies)
     visits: str = parse_visits(request.cookies)
+    photo = photo_user(request.cookies)
+
+    with open(f"static/images/{username}.jpg", "wb") as f:
+        f.write(photo)
+        f.close()
 
     response = make_response(
         render_template('homepage.html', online_users=online_user_list,
-                        name=username, visits=visits))
+                        name=username, visits=visits, picture=f"images/{username}.jpg"))
     response.set_cookie('visits', value=visits)
     sys.stdout.flush()
     return response
@@ -72,9 +78,15 @@ def login():
 def signup():
     if request.method == 'POST':
         username, password = request.form.get("username").strip(), request.form.get("password")
-        print(f"username: {username}, password: {password}")
-        register(username, password)
+        file = request.files['photo']
+
+        # print(f"username: {username}, password: {password}")
+        # TODO change the profile_pic path from dog to the user uploaded pic
+        reading = (file.read())
+        register(username, password, profile_pic=reading)
+        # print(reading)
         flash(u'Account created successfully', 'success')
+
         # -> /login (or bypass login) -> homepage
         # return redirect("/")
         return redirect("/login")
@@ -128,11 +140,11 @@ def draw():
 
 @socket.on('draw')
 def draw(data):
-    print(data)
+    # print(data)
     emit('drawing', data, broadcast=True)
 
 
 @socket.on('stop_drawing')
 def stop_draw(data):
-    print(data)
+    # print(data)
     emit('stopping_drawing', data, broadcast=True)

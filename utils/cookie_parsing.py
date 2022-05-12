@@ -18,3 +18,13 @@ def auth_user(cookies) -> str:
         # username = 'Trusted User'
 
     return username
+
+
+def photo_user(cookies):
+    pic = b""
+    if 'auth_token' in cookies:
+        if authenticate("", cookies['auth_token']):
+            pic = authenticate("", cookies['auth_token'])['profile_pic']
+        # username = 'Trusted User'
+
+    return pic
