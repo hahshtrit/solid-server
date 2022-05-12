@@ -2,27 +2,28 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <p align = "right"> Page visits: {{ visits }}</p>
-    <h1 align="center">Home Page</h1>
-    <!-- <div class="test">
+<p align="right"> Page visits: {{ visits }}</p>
+<h1 align="center">Home Page</h1>
+<!-- <div class="test">
         <p>this is really neat</p>
     </div> -->
-    <!-- <script src="{{url_for('static', filename='main.js')}}"></script> -->
-    {% if name %}
-        <h3>Welcome, {{ name }}</h3>
-    {% endif %}
+<!-- <script src="{{url_for('static', filename='main.js')}}"></script> -->
+{% if name %}
+<h3>Welcome, {{ name }}</h3>
+<img src='static/images/download.png' />
+{% endif %}
 
-    <br/>
-    <h3 align="left">Online Users:</h3>
-    <ul class="list-group list-group-flush" id="online_users">
-        {% for user in online_users %}
-            <li class="list-group-item">
-                {{ user }}
-            </li>
-        {% endfor %}
-    </ul>
-    <!-- below is working upvote/downvote with count -->
-    <!-- <button id="upvote" type="upvote" class="btn btn-success">Upvote</button>
+<br />
+<h3 align="left">Online Users:</h3>
+<ul class="list-group list-group-flush" id="online_users">
+    {% for user in online_users %}
+    <li class="list-group-item">
+        {{ user }}
+    </li>
+    {% endfor %}
+</ul>
+<!-- below is working upvote/downvote with count -->
+<!-- <button id="upvote" type="upvote" class="btn btn-success">Upvote</button>
 <p id="votes">{{ votes }}</p>
 <button id="downvote" type="downvote" class="btn btn-danger">Downvote</button>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
