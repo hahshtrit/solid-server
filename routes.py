@@ -20,6 +20,8 @@ online_users = {}
 def dog():
     doggie = open("images/dog.jpg", "rb")
     return doggie
+
+
 @app.route("/")
 @app.route("/home")
 def homepage():
