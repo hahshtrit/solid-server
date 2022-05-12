@@ -28,14 +28,17 @@ def homepage():
     username: str = auth_user(request.cookies)
     visits: str = parse_visits(request.cookies)
     photo = photo_user(request.cookies)
+    path = None
+    if photo:
+        with open(f"static/images/{username}.jpg", "wb") as f:
+            f.write(photo)
+            f.close()
+        path = f"images/{username}.jpg"
 
-    with open(f"static/images/{username}.jpg", "wb") as f:
-        f.write(photo)
-        f.close()
 
     response = make_response(
         render_template('homepage.html', online_users=online_user_list,
-                        name=username, visits=visits, picture=f"images/{username}.jpg"))
+                        name=username, visits=visits, picture=path))
     response.set_cookie('visits', value=visits)
     sys.stdout.flush()
     return response
@@ -79,10 +82,22 @@ def signup():
     if request.method == 'POST':
         username, password = request.form.get("username").strip(), request.form.get("password")
         file = request.files['photo']
+        file_type = file.content_type
+        file_type = file_type.split('/')
+        reading = (file.read())
+
+        if file_type[0] != "image":
+            flash('ERROR this is not a image, so it will not display', "warning")
+            reading = None
+        # print(file_type)
+
+        if file_type[1].strip() != "jpeg":
+            flash('MUST be jpg', "warning")
+            reading = None
 
         # print(f"username: {username}, password: {password}")
         # TODO change the profile_pic path from dog to the user uploaded pic
-        reading = (file.read())
+
         register(username, password, profile_pic=reading)
         # print(reading)
         flash(u'Account created successfully', 'success')
