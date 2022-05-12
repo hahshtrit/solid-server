@@ -26,15 +26,9 @@ def homepage():
 
     # print(f"Cookies: {request.cookies}")
     username: str = auth_user(request.cookies)
-    # add profile picture here in make response
     visits: str = parse_visits(request.cookies)
-    # photo = 'images/dog.jpg'
     photo = photo_user(request.cookies)
-    # p = send_file(BytesIO(data), attachment_filename=photo)
-    # print(p)
-    # print(photo, 'this is the photo')
-    # print(photo)
-    # photo = None
+
     with open(f"static/images/{username}.jpg", "wb") as f:
         f.write(photo)
         f.close()
