@@ -15,6 +15,7 @@ votes = 0  # this is needed for working upvote/downvote
 
 online_users = {}
 
+users_sid = {}
 
 # TODO move public docs into /public
 
@@ -119,6 +120,10 @@ def logout():
         online_users.pop(username, None)
         response = redirect("/")
         response.set_cookie('auth_token', expires=0)
+
+        global users_sid
+        users_sid.pop(username, None)
+
         return response
 
 
@@ -152,13 +157,48 @@ def draw():
     return render_template('draw.html')
 
 
-@socket.on('draw')
+@socket.on('draw', namespace='/draw')
 def draw(data):
     # print(data)
     emit('drawing', data, broadcast=True)
 
 
-@socket.on('stop_drawing')
+@socket.on('stop_drawing', namespace='/draw')
 def stop_draw(data):
     # print(data)
     emit('stopping_drawing', data, broadcast=True)
+
+
+@socket.on('connect_user', namespace='/dm')
+# @socket.on('connect_user')
+def connect_user(data):
+    print('connect user')
+    print(request.sid)
+    # print(f"Cookies: {request.cookies}")
+    username: str = auth_user(request.cookies)
+    print(username)
+    if username == '':  # exit if not logged in
+        return
+    print('success')
+    global users_sid
+    users_sid[username] = request.sid
+    print(users_sid)
+
+@socket.on('direct_message', namespace='/dm')
+def direct_message(data):
+    print('direct message')
+    print(data)
+    username: str = auth_user(request.cookies)
+    print(username)
+    if username == '':  # exit if not logged in
+        return
+    print('success, sender logged in')
+
+    global users_sid
+    if data['username'] not in users_sid:   # exit if sending to non-logged-in user
+        return
+    reciever_sid = users_sid[data['username']]
+    message = data['message']
+    print('success, reciever logged in')
+
+    emit('new_dm', {'sender': username, 'message': message}, room=reciever_sid)

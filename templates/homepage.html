@@ -29,6 +29,15 @@
         {% endfor %}
 
     </ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script src="{{url_for('static', filename='dm.js')}}"></script>
+    <br/>
+    <p>Last Direct Message Recieved:</p>
+    <p id="last_dm"></p>
+    <br/>
+    Enter username to Direct Message: <input type="text" id="dm_target">
+    Enter message: <input type="text" id="dm_message">
+    <button type="submit" class="btn btn-primary" id="send_dm">Send Direct Message</button>
     <!-- below is working upvote/downvote with count -->
     <!-- <button id="upvote" type="upvote" class="btn btn-success">Upvote</button>
 <p id="votes">{{ votes }}</p>
