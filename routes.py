@@ -7,7 +7,7 @@ from flask_socketio import SocketIO, emit
 from io import BytesIO
 
 from utils.authentication import generate_auth_token
-from utils.database import register, authenticate, add_auth_token
+from utils.database import register, authenticate, add_auth_token, update_profile_picture
 from utils.cookie_parsing import parse_visits, auth_user, photo_user
 from bcrypt import checkpw
 
@@ -17,19 +17,28 @@ online_users = {}
 
 users_sid = {}
 
+
 # TODO move public docs into /public
 
-@app.route("/")
-@app.route("/home")
+@app.route("/", methods=['GET', 'POST'])
+@app.route("/home", methods=['GET', 'POST'])
 def homepage():
     global online_users
-    online_user_list = [(users, f"images/{users}.jpg") for users, status in online_users.items() if status]
+    online_user_list = []
+        # [(users, f"images/{users}.jpg") for users, status in online_users.items() if status]
+    for users,status in online_users.items():
+        if status:
+            if authenticate(users).get('profile_pic'):
+                online_user_list.append((users,f"images/{users}.jpg"))
+            else:
+                online_user_list.append((users,None))
 
-    # print(f"Cookies: {request.cookies}")
+
     username: str = auth_user(request.cookies)
     visits: str = parse_visits(request.cookies)
     photo = photo_user(request.cookies)
     path = None
+
     if photo:
         with open(f"static/images/{username}.jpg", "wb") as f:
             f.write(photo)
@@ -49,8 +58,26 @@ def about():
     return render_template('about.html')
 
 
-@app.route("/account")  # has settings and dms
+@app.route("/account", methods=['GET', 'POST'])  # has settings and dms
 def account():
+    username: str = auth_user(request.cookies)
+
+    if request.method == 'POST':
+        file = request.files['new_photo']
+        file_type = file.content_type
+        file_type = file_type.split('/')
+        reading = (file.read())
+
+        if file_type[0] != "image":
+            flash('ERROR this is not a image, so it will not display', "warning")
+            reading = None
+        if file_type[1].strip() != "jpeg":
+            flash('MUST be jpg', "warning")
+            reading = None
+        if reading:
+            update_profile_picture(username, reading)
+            flash("Done!!", "success")
+
     return render_template('account.html')
 
 
@@ -82,6 +109,7 @@ def signup():
     if request.method == 'POST':
         username, password = request.form.get("username").strip(), request.form.get("password")
         file = request.files['photo']
+
         file_type = file.content_type
         file_type = file_type.split('/')
         reading = (file.read())
@@ -96,7 +124,6 @@ def signup():
             reading = None
 
         # print(f"username: {username}, password: {password}")
-        # TODO change the profile_pic path from dog to the user uploaded pic
 
         register(username, password, profile_pic=reading)
         # print(reading)
@@ -173,29 +200,30 @@ def stop_draw(data):
 # @socket.on('connect_user')
 def connect_user(data):
     print('connect user')
-    print(request.sid)
+    # print(request.sid)
     # print(f"Cookies: {request.cookies}")
     username: str = auth_user(request.cookies)
-    print(username)
+    # print(username)
     if username == '':  # exit if not logged in
         return
     print('success')
     global users_sid
     users_sid[username] = request.sid
-    print(users_sid)
+    # print(users_sid)
+
 
 @socket.on('direct_message', namespace='/dm')
 def direct_message(data):
     print('direct message')
-    print(data)
+    # print(data)
     username: str = auth_user(request.cookies)
-    print(username)
+    # print(username)
     if username == '':  # exit if not logged in
         return
     print('success, sender logged in')
 
     global users_sid
-    if data['username'] not in users_sid:   # exit if sending to non-logged-in user
+    if data['username'] not in users_sid:  # exit if sending to non-logged-in user
         return
     reciever_sid = users_sid[data['username']]
     message = data['message']

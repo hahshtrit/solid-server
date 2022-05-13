@@ -34,6 +34,10 @@ def remove_auth_token(username: str):
     userinfo.update_one({"username": username}, {'$set': {"auth_token": ""}})
 
 
+def update_profile_picture(username: str, profile_pic):
+    userinfo.update_one({"username": username}, {'$set': {"profile_pic": profile_pic}})
+
+
 # only need to query a user by username or auth_token
 def authenticate(username: str = "", auth_token: str = "") -> dict:
     if not username and not auth_token:
