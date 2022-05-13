@@ -43,9 +43,10 @@ canvas.addEventListener('mouseup', (e) => {
 
 canvas.addEventListener('mousemove', draw);
 
-var socket = io();
+var s = io();
+var socket = io('/draw');
 socket.on('connect', function() {
-    socket.emit('my event_draw', {data: 'I\'m connected!'});
+    s.emit('my event_draw', {data: 'I\'m connected!'});
 });
 
 socket.on('drawing', function(data) {
