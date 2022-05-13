@@ -25,14 +25,13 @@ users_sid = {}
 def homepage():
     global online_users
     online_user_list = []
-        # [(users, f"images/{users}.jpg") for users, status in online_users.items() if status]
-    for users,status in online_users.items():
+    # [(users, f"images/{users}.jpg") for users, status in online_users.items() if status]
+    for users, status in online_users.items():
         if status:
             if authenticate(users).get('profile_pic'):
-                online_user_list.append((users,f"images/{users}.jpg"))
+                online_user_list.append((users, f"images/{users}.jpg"))
             else:
-                online_user_list.append((users,None))
-
+                online_user_list.append((users, None))
 
     username: str = auth_user(request.cookies)
     visits: str = parse_visits(request.cookies)
@@ -51,11 +50,6 @@ def homepage():
     response.set_cookie('visits', value=visits)
     sys.stdout.flush()
     return response
-
-
-@app.route("/about")  # not gonna be used
-def about():
-    return render_template('about.html')
 
 
 @app.route("/account", methods=['GET', 'POST'])  # has settings and dms
