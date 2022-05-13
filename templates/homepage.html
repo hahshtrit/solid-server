@@ -24,7 +24,10 @@
         {% for user, pics in online_users %}
             <li class="list-group-item">
                 {{ user }}
+                {% if pics %}
                 <img src= "{{url_for('static', filename= pics)}}"  class="profilePic"/>
+                {% endif %}
+
             </li>
         {% endfor %}
 

@@ -1,1 +1,14 @@
 {% extends 'base.html' %}
+{% block content %}
+<form method="POST"  enctype="multipart/form-data">
+    <h3 align="center">Change Profile Picture</h3>
+    <div class="form-group">
+        <label for="change_pic">Image: </label>
+        <input id="change_pic" type="file" name="new_photo">
+        <!-- can try to make above type "password" if want -->
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock content %}
