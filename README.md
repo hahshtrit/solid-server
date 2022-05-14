@@ -1,6 +1,11 @@
-###  Current Goals
-- User DM capability
-- User account: settings 
+# If the hyperlinks don't work on the Reports
+- Flask 
+  https://docs.google.com/document/d/13zTaJ5e0rP4XEGlQaV0PB4qoDQrGK8j7cbSQ5OnzLe8/edit#heading=h.vwr3w0gfx3dj
+- Eventlet
+  https://docs.google.com/document/d/1HZ_ZFUSDFQMjgiL0OCYmnMXV_O_I0EZ015taWvTzJrw/edit#heading=h.vwr3w0gfx3dj
+- Flask-socketio
+https://docs.google.com/document/d/12xxdT-QAm8HQlvgYKgNzs90jt34HLslXenmdrDMkJrk/edit#heading=h.vwr3w0gfx3dj
+
 
 ## Collaboration
 #### IMPORTANT: Make sure to `git pull` before working on anything 
