@@ -133,7 +133,7 @@ def signup():
 # TODO toggle logout button to only show when user is logged in
 @app.route("/logout")
 def logout():
-    username: str = auth_user(request)
+    username: str = auth_user(request.cookies)
     if username:
         flash(u'Logged out successfully', 'success')
         online_users.pop(username, None)
