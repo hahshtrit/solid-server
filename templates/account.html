@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
+    {% if name %}
+        <h3>Account settings for {{ name }}</h3>
+    {% endif %}
+
+    <a class="form-group" id="animal" href="/toggle">Toggle between cat or dog</a>
+
     <form method="POST" enctype="multipart/form-data">
         <h3 align="center">Change Profile Picture</h3>
         <div class="form-group">

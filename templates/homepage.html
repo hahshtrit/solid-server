@@ -1,8 +1,22 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
 
+<body>
+
+
 {% block content %}
-    <p align = "right"> Page visits: {{ visits }}</p>
+    <p align="right"> Page visits: {{ visits }}</p>
+
+    {% if name %}
+        {% if dog %}
+            <p>It seems like you are a dog person</p>
+            <img src="{{ url_for('static', filename="images/dog.jpg") }}" align="center" class="profilePic"/>
+        {% else %}
+            <p>It seems like you are a cat person, I hope your toast is soggy</p>
+            <img src="{{ url_for('static', filename="images/cat.jpg") }}" align="center" class="profilePic"/>
+        {% endif %}
+    {% endif %}
+
     <h1 align="center">Home Page</h1>
     <!-- <div class="test">
         <p>this is really neat</p>
@@ -10,12 +24,10 @@
     <!-- <script src="{{url_for('static', filename='main.js')}}"></script> -->
     {% if name %}
         <h3>Welcome, {{ name }}</h3>
-
         {% if picture %}
-            <img src= "{{url_for('static', filename= picture)}}"  class="profilePic"/>
-
-
+            <img src="{{ url_for('static', filename= picture) }}" class="profilePic"/>
         {% endif %}
+
     {% endif %}
 
     <br/>
@@ -25,15 +37,17 @@
             <li class="list-group-item">
                 {{ user }}
                 {% if pics %}
-                <img src= "{{url_for('static', filename= pics)}}"  class="profilePic"/>
+                    <img src="{{ url_for('static', filename= pics) }}" class="profilePic"/>
                 {% endif %}
 
             </li>
         {% endfor %}
 
     </ul>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
-    <script src="{{url_for('static', filename='dm.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+            integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+            crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='dm.js') }}"></script>
     <br/>
     <p>Last Direct Message Recieved:</p>
     <p id="last_dm"></p>
@@ -41,6 +55,7 @@
     Enter username to Direct Message: <input type="text" id="dm_target">
     Enter message: <input type="text" id="dm_message">
     <button type="submit" class="btn btn-primary" id="send_dm">Send Direct Message</button>
+
     <!-- below is working upvote/downvote with count -->
     <!-- <button id="upvote" type="upvote" class="btn btn-success">Upvote</button>
 <p id="votes">{{ votes }}</p>

@@ -10,6 +10,7 @@ def parse_visits(cookies: dict) -> str:
     return str(new_visits)
 
 
+# might have to refactor this
 def auth_user(cookies) -> str:
     username: str = ""
     if 'auth_token' in cookies:
@@ -22,9 +23,17 @@ def auth_user(cookies) -> str:
 
 def photo_user(cookies):
     pic = b""
-    # this is breaking bc ur not checking what ur accessing
     if 'auth_token' in cookies:
         if authenticate("", cookies['auth_token']):
             pic = authenticate("", cookies['auth_token'])['profile_pic']
 
     return pic
+
+
+def get_pref(cookies) -> bool:
+    pref = True
+    if 'auth_token' in cookies:
+        if authenticate("", cookies['auth_token']):
+            pref = authenticate("", cookies['auth_token'])['dog']
+
+    return pref

@@ -1,14 +1,13 @@
 import sys
 
-from flask import render_template, request, redirect, make_response, send_file
-from flask import session, flash
+from flask import render_template, request, redirect, make_response
+from flask import  flash
 from __init__ import app, socket
-from flask_socketio import SocketIO, emit
-from io import BytesIO
+from flask_socketio import emit
 
 from utils.authentication import generate_auth_token
-from utils.database import register, authenticate, add_auth_token, update_profile_picture
-from utils.cookie_parsing import parse_visits, auth_user, photo_user
+from utils.database import register, authenticate, add_auth_token, update_profile_picture, change_animal
+from utils.cookie_parsing import parse_visits, auth_user, photo_user, get_pref
 from bcrypt import checkpw
 
 votes = 0  # this is needed for working upvote/downvote
@@ -36,8 +35,9 @@ def homepage():
     username: str = auth_user(request.cookies)
     visits: str = parse_visits(request.cookies)
     photo = photo_user(request.cookies)
-    path = None
+    dog_pref: bool = get_pref(request.cookies)
 
+    path = None
     if photo:
         with open(f"static/images/{username}.jpg", "wb") as f:
             f.write(photo)
@@ -46,7 +46,8 @@ def homepage():
 
     response = make_response(
         render_template('homepage.html', online_users=online_user_list,
-                        name=username, visits=visits, picture=path))
+                        name=username, visits=visits, picture=path, dog=dog_pref))
+
     response.set_cookie('visits', value=visits)
     sys.stdout.flush()
     return response
@@ -72,7 +73,7 @@ def account():
             update_profile_picture(username, reading)
             flash("Done!!", "success")
 
-    return render_template('account.html')
+    return render_template('account.html', name=username)
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -119,7 +120,7 @@ def signup():
 
         # print(f"username: {username}, password: {password}")
 
-        register(username, password, profile_pic=reading)
+        register(username, password, profile_pic=reading, dog=True)
         # print(reading)
         flash(u'Account created successfully', 'success')
 
@@ -132,11 +133,8 @@ def signup():
 # TODO toggle logout button to only show when user is logged in
 @app.route("/logout")
 def logout():
-    username = auth_user(request.cookies)
-    if not username:
-        flash(u'You have to be logged in to go logout', 'warning')
-        return redirect('/login')
-    else:
+    username: str = auth_user(request)
+    if username:
         flash(u'Logged out successfully', 'success')
         online_users.pop(username, None)
         response = redirect("/")
@@ -146,6 +144,22 @@ def logout():
         users_sid.pop(username, None)
 
         return response
+    else:
+        flash(u'You have to be logged in to go logout', 'warning')
+        return redirect('/login')
+
+
+@app.route("/toggle")
+def toggle():
+    username: str = auth_user(request.cookies)
+    dog_pref = get_pref(request.cookies)
+    if username:
+        change_animal(username, dog_pref)
+        return redirect("/account")
+
+    else:
+        flash(u'You have to be logged in', 'warning')
+        return redirect("/account")
 
 
 # this is working socket stuff for upvote/downvote

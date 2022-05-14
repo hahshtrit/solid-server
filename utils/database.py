@@ -2,7 +2,6 @@ import sys
 
 from pymongo import MongoClient
 from utils.authentication import hash_password, hash_token
-import bcrypt
 
 mongo_client = MongoClient("mongo")
 db = mongo_client["cse312"]
@@ -15,15 +14,23 @@ userinfo = db["userinfo"]
 # username: _               (in string)
 # hash_salt_password: _     (in bytes)
 # hash_salt_auth_token: _   (in bytes)
+# dog:                      (in bool)
 # }
 
 # TODO: session IDs can be used instead of authentication tokens
 
-def register(entered_username: str, entered_password: str, auth_token: str = "", profile_pic: bytes = None):
+def register(entered_username: str, entered_password: str, auth_token: str = "", profile_pic: bytes = None,
+             dog: bool = True):
     userinfo.insert_one({"username": entered_username, "password": hash_password(entered_password), "auth_token": b"",
-                         "profile_pic": profile_pic})
+                         "profile_pic": profile_pic, "dog": dog})
     # print(list(userinfo.find()))
     sys.stdout.flush()
+
+
+def change_animal(username: str, dog_person: bool):
+    # reverse pref
+    dog_person = False if dog_person else True
+    userinfo.update_one({"username": username}, {'$set': {"dog": dog_person}})
 
 
 def add_auth_token(username: str, auth_token):
