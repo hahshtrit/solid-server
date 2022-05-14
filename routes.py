@@ -1,7 +1,7 @@
 import sys
 
 from flask import render_template, request, redirect, make_response
-from flask import  flash
+from flask import flash
 from __init__ import app, socket
 from flask_socketio import emit
 
